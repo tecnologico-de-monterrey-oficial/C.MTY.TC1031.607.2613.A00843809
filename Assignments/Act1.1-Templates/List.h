@@ -14,7 +14,7 @@ private:
     int size;
 public:
     List();
-    void insert(T data);
+    void insert(T val);
     void removeLast();
     T getData(int pos);
     int getSize();
@@ -31,7 +31,7 @@ List<T>::List(){
 }
 
 template <typename T>
-void List<T>::insert(T data){
+void List<T>::insert(T val){
     data.push_back(val);
     size++;
 }
@@ -48,7 +48,7 @@ void List<T>::removeLast(){
 
 template <typename T>
 T List<T>::getData(int pos){
-    retrun data[pos];
+    return data[pos];
 }
 
 template <typename T>
