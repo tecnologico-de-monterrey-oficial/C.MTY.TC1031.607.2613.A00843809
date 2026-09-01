@@ -1,5 +1,4 @@
-// David Alonso Cantú Delgado
-// A00189239
+
 #include <iostream>
 #include <vector>
 
@@ -32,7 +31,9 @@ void swapSort(vector<T> &list) {
 
 template <typename T>
 void bubbleSort(vector<T> &list){
+    bool change = true;
     for (int i = list.size()-1; i>0 && change; i--){
+        change = false;
         for (int j = 0; j<i; j++){
             if (list[j] > list[j+1]){
                 change = true;
@@ -40,6 +41,39 @@ void bubbleSort(vector<T> &list){
             }
         }
     }
+}
+
+template <typename T>
+void insertionSort(vector<T> &list){
+    
+    for (int i = 1; i <list.size(); i++){
+        T key = list[i];
+        int j = i-1;
+        
+        while (j >=0 && list[j] > key){
+            list[j+1] = list[j];
+            j = j- 1;
+        }
+        list[j + 1] = key;
+    }
+
+    
+}
+
+template <typename T>
+void selectionSort(vector<T> & list){
+    for (int i = 0; i < list.size - 1; i++){
+        int minval = i; 
+
+        for (int j = i+1; j < list.size() - 1; j++){
+            if (list[j] < list[minval]){
+                minval = j;
+            }
+        }
+        if (minval != i){
+        swap(list, minval, i);
+       }   
+    }   
 }
 
 
@@ -56,8 +90,18 @@ int main() {
     cout << "Lista original: " << endl;
     print(list);
     swapSort(list);
-    cout << "Lista ordenada: " << endl;
+    cout << "Lista ordenada con swapSort: " << endl;
     print(list);
+    bubbleSort(list);
+    cout << "Lista ordenada con bubbleSort: " << endl;
+    print(list);
+    insertionSort(list);
+    cout << "Lista ordenada con insertionSort: " << endl;
+    print(list);
+    selectionSort(list);
+    cout << "Lista ordenada con selectionSort: " << endl;
+    print(list);
+
 
 
 
