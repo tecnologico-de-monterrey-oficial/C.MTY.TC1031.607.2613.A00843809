@@ -159,6 +159,28 @@ void mergeSort(vector<T> &list, int left, int right){
     }
 }
 
+int buscarLimiteInferior(const vector<Registro>& arr, long long objetivo) {
+    int ini = 0, fin = arr.size() - 1, res = -1;
+    while (ini <= fin) {
+        int mid = ini + (fin - ini) / 2;
+        if (arr[mid].getFechaValor() >= objetivo) {
+            res = mid; fin = mid - 1; 
+        } else ini = mid + 1;
+    }
+    return res;
+}
+
+int buscarLimiteSuperior(const vector<Registro>& arr, long long objetivo) {
+    int ini = 0, fin = arr.size() - 1, res = -1;
+    while (ini <= fin) {
+        int mid = ini + (fin - ini) / 2;
+        if (arr[mid].getFechaValor() <= objetivo) {
+            res = mid; ini = mid + 1; 
+        } else fin = mid - 1;
+    }
+    return res;
+}
+
 int main() {
     char repetir = 's';
     while (repetir == 's' || repetir == 'S') {
@@ -207,6 +229,32 @@ int main() {
         for (size_t i = 0; i < listaLogs.size(); i++) archivoSalida << listaLogs[i].getLineaCompleta() << "\n";
         archivoSalida.close();
         cout << "Guardado en output607.txt" << endl;
+
+
+        cout << "\nBUSQUEDA POR RANGO" << endl;
+        cout << "Formato: Mes Dia Anio Hora:Min:Seg (ej: Sep 12 2024 05:00:00)" << endl;
+        
+        string m1, h1, m2, h2; int d1, a1, d2, a2;
+        cout << "Inicio: "; cin >> m1 >> d1 >> a1 >> h1;
+        Registro regInicio(m1, d1, a1, h1);
+
+        cout << "Fin: "; cin >> m2 >> d2 >> a2 >> h2;
+        Registro regFin(m2, d2, a2, h2);
+
+        int posInicio = buscarLimiteInferior(listaLogs, regInicio.getFechaValor());
+        int posFin = buscarLimiteSuperior(listaLogs, regFin.getFechaValor());
+
+        ofstream archivoRango("../out/range607.txt");
+        int encontrados = 0;
+        if (posInicio != -1 && posFin != -1 && posInicio <= posFin) {
+            for (int i = posInicio; i <= posFin; i++) {
+                archivoRango << listaLogs[i].getLineaCompleta() << "\n";
+                encontrados++;
+            }
+        }
+        archivoRango.close();
+        cout << "Registros en rango: " << encontrados << endl;
+        cout << "Rango guardado en range607.txt" << endl;
 
         cout << "\n¿Probar otra vez? (s/n): ";
         cin >> repetir;
