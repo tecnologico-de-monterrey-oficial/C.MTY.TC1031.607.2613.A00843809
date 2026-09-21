@@ -18,6 +18,7 @@ Para probar este programa, sigue estos pasos:
 ## Formato de fechas para la búsqueda por rango
 Al momento de realizar la búsqueda binaria, el sistema pedirá ingresar una fecha de inicio y una fecha de fin. Es necesario respetar la estructura, los espacios y las mayúsculas del archivo de texto original:
 `Mes Dia Anio Hora:Minuto:Segundo`
+Utilicé `Anio` para que no hubiera algún conflicto con la letra ñ en el codigo y siguiera siendo entendible.
 
 **Ejemplo de entrada válida:** `Sep 08 2024 04:37:37`
 
@@ -28,4 +29,4 @@ En el desarrollo de esta evidencia, me apegué a los lineamientos de la materia 
 * **Trabajo manual y corrección de errores:** No usé la IA para generar la solución de punta a punta. Durante el desarrollo de la búsqueda binaria, la IA sugirió un algoritmo que fallaba con los timestamps duplicados (un caso de prueba estipulado en la actividad). Detecté este error, descarté la sugerencia y programé manualmente las funciones de límite inferior y superior para manejar las colisiones correctamente.
 
 ## Enlace al Video Explicativo
-[INSERTA AQUÍ TU ENLACE DE YOUTUBE O DRIVE]
+https://youtu.be/6gfkAglb9X0
