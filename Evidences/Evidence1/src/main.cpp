@@ -190,7 +190,15 @@ int main() {
         cout << "Selecciona un archivo: ";
         int opcionArchivo; cin >> opcionArchivo;
 
-        string ruta = (opcionArchivo == 1) ? "../data/log607-1.txt" : "../data/log607-2.txt";
+        string ruta = "";
+        if (opcionArchivo == 1) {
+            ruta = "../data/log607-1.txt";
+        } else if (opcionArchivo == 2) {
+            ruta = "../data/log607-2.txt";
+        } else {
+            cout << "Opcion no valida. Intenta de nuevo." << endl;
+            continue;
+        }
         ifstream archivo(ruta);
         if (!archivo.is_open()) return 1;
 
