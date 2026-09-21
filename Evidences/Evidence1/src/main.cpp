@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 
 using namespace std;
 
@@ -159,17 +160,56 @@ void mergeSort(vector<T> &list, int left, int right){
 }
 
 int main() {
-    ifstream archivo("../data/log607-1.txt");
-    if (!archivo.is_open()) {
-        cout << "Error al abrir el archivo." << endl;
-        return 1;
+    char repetir = 's';
+    while (repetir == 's' || repetir == 'S') {
+        cout << "SISTEMA DE GESTION DE LOGS" << endl;
+        cout << "1. Cargar log607-1.txt (Desordenado)" << endl;
+        cout << "2. Cargar log607-2.txt (Casi ordenado)" << endl;
+        cout << "Selecciona un archivo: ";
+        int opcionArchivo; cin >> opcionArchivo;
+
+        string ruta = (opcionArchivo == 1) ? "../data/log607-1.txt" : "../data/log607-2.txt";
+        ifstream archivo(ruta);
+        if (!archivo.is_open()) return 1;
+
+        vector<Registro> listaLogs; string linea;
+        while (getline(archivo, linea)) if (!linea.empty()) listaLogs.push_back(Registro(linea));
+        archivo.close();
+
+        cout << "\nAlgoritmos de ordenamiento:" << endl;
+        cout << "1. Swap Sort\n2. Bubble Sort\n3. Insertion Sort\n4. Selection Sort\n5. Quick Sort\n6. Merge Sort" << endl;
+        cout << "Opcion: ";
+        int opcionAlgoritmo; cin >> opcionAlgoritmo;
+        cin.ignore();
+        
+        cout << "\nPrediccion de tiempo (Rapido / Lento y por que): ";
+        string prediccion; getline(cin, prediccion);
+
+        string nombreAlgo = "";
+        auto inicioTiempo = chrono::high_resolution_clock::now();
+
+        switch (opcionAlgoritmo) {
+            case 1: swapSort(listaLogs); nombreAlgo = "Swap Sort"; break;
+            case 2: bubbleSort(listaLogs); nombreAlgo = "Bubble Sort"; break;
+            case 3: insertionSort(listaLogs); nombreAlgo = "Insertion Sort"; break;
+            case 4: selectionSort(listaLogs); nombreAlgo = "Selection Sort"; break;
+            case 5: quickSort(listaLogs); nombreAlgo = "Quick Sort"; break;
+            case 6: mergeSort(listaLogs, 0, listaLogs.size() - 1); nombreAlgo = "Merge Sort"; break;
+        }
+
+        auto finTiempo = chrono::high_resolution_clock::now();
+        chrono::duration<double, milli> tiempoMs = finTiempo - inicioTiempo;
+
+        cout << "\n--- RESULTADOS ---" << endl;
+        cout << "Algoritmo: " << nombreAlgo << "\nTiempo: " << tiempoMs.count() << " ms" << endl;
+        
+        ofstream archivoSalida("../out/output607.txt");
+        for (size_t i = 0; i < listaLogs.size(); i++) archivoSalida << listaLogs[i].getLineaCompleta() << "\n";
+        archivoSalida.close();
+        cout << "Guardado en output607.txt" << endl;
+
+        cout << "\n¿Probar otra vez? (s/n): ";
+        cin >> repetir;
     }
-    vector<Registro> listaLogs;
-    string linea;
-    while (getline(archivo, linea)) {
-        if (!linea.empty()) listaLogs.push_back(Registro(linea));
-    }
-    archivo.close();
-    cout << "Parsing exitoso. Total de registros: " << listaLogs.size() << endl;
     return 0;
 }
