@@ -3,13 +3,20 @@ using namespace std;
 
 #include "Node.h"
 
-int main(){
+int main() {
 
     auto node1 = make_unique<Node<int>>(20);
+
     cout << "node1 data: " << node1->data << endl;
-    auto node2 = std::make_unique<Node<int>>(10, std::move(node1));
+
+    auto node2 = make_unique<Node<int>>(10, std::move(node1));
 
     cout << "node1 data: " << node2->next->data << endl;
+    
+    
+
+    
+
 
     return 0;
 }
